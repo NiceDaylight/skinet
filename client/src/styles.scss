@@ -1,1 +1,30 @@
-@import "node_modules/font-awesome/scss/font-awesome.scss"
+
+label.xng-breadcrumb-trail {
+    color: orange;
+}
+
+
+// Carousel
+carousel.slide-animated {
+    slide.item {
+      animation-duration: 1s;
+      animation-fill-mode: both;
+      &.active {
+        width: 100%;
+        animation-name: carouselSlideIn;
+      }
+      &:not(.active) {
+        display: table-cell;
+        animation-name: carouselSlideOut;
+      }
+    }
+  }
+  
+  @keyframes carouselSlideIn {
+    0% { transform: translateX(100%); }
+    100% { transform: translateX(0); }
+  }
+  @keyframes carouselSlideOut {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-100%); }
+  }
