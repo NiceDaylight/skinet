@@ -10,20 +10,20 @@ import { ShopService } from './shop.service';
   templateUrl: './shop.component.html',
   styleUrls: ['./shop.component.scss']
 })
-export class ShopComponent implements OnInit{
+export class ShopComponent implements OnInit {
   @ViewChild('search') searchTerm?: ElementRef;
   products: Product[] = [];
   brands: Brand[] = [];
   types: Type[] = [];
   shopParams = new ShopParams();
   sortOptions = [
-    {name: 'Alphabetical', value: 'name'},
-    {name: 'Price: Low to high', value: 'priceAsc'},
-    {name: 'Price: high to low', value: 'priceDesc'},
+    { name: 'Alphabetical', value: 'name' },
+    { name: 'Price: Low to high', value: 'priceAsc' },
+    { name: 'Price: high to low', value: 'priceDesc' },
   ];
   totalCount = 0;
 
-  constructor(private shopService: ShopService) {}
+  constructor(private shopService: ShopService) { }
   ngOnInit(): void {
     this.getProducts();
     this.getBrands();
@@ -33,67 +33,60 @@ export class ShopComponent implements OnInit{
   getProducts() {
     this.shopService.getProducts(this.shopParams)
       .subscribe({
-      next: response => {
+        next: response => {
 
-        this.products = response.data;
-        this.shopParams.pageIndex = response.pageIndex;
-        this.shopParams.pageSize = response.pageSize;
-        this.totalCount = response.count;
-      },
-      error: error => console.log(error)
-    })
+          this.products = response.data;
+          this.shopParams.pageIndex = response.pageIndex;
+          this.shopParams.pageSize = response.pageSize;
+          this.totalCount = response.count;
+        },
+        error: error => console.log(error)
+      })
   }
   getBrands() {
     this.shopService.getBrands().subscribe({
-      next: response => this.brands = [{id: 0, name: "All"}, ...response],
+      next: response => this.brands = [{ id: 0, name: "All" }, ...response],
       error: error => console.log(error)
     })
   }
   getTypes() {
     this.shopService.getTypes().subscribe({
-      next: response => this.types = [{id: 0, name: "All"}, ...response],
+      next: response => this.types = [{ id: 0, name: "All" }, ...response],
       error: error => console.log(error)
     })
   }
 
-  onBrandSelected(brandId: number)
-  {
+  onBrandSelected(brandId: number) {
     this.shopParams.brandId = brandId;
     this.shopParams.pageIndex = 1;
     this.getProducts();
   }
 
-  onTypeSelected(typeId: number)
-  {
+  onTypeSelected(typeId: number) {
     this.shopParams.typeId = typeId;
     this.shopParams.pageIndex = 1;
     this.getProducts();
   }
 
-  onSortSelected(event: any)
-  {
+  onSortSelected(event: any) {
     this.shopParams.sort = event.target.value;
     this.getProducts();
   }
 
-  onPageChanged(event: any)
-  {
-    if (this.shopParams.pageIndex !== event)
-    {
+  onPageChanged(event: any) {
+    if (this.shopParams.pageIndex !== event) {
       this.shopParams.pageIndex = event;
       this.getProducts();
     }
   }
 
-  onSearch()
-  {
+  onSearch() {
     this.shopParams.search = this.searchTerm?.nativeElement.value;
     this.shopParams.pageIndex = 1;
     this.getProducts();
   }
 
-  onReset()
-  {
+  onReset() {
     if (this.searchTerm) this.searchTerm.nativeElement.value = '';
     this.shopParams = new ShopParams();
     this.getProducts();
