@@ -7,8 +7,8 @@ export interface User {
 export interface Address {
     firstName: string;
     lastName: string;
-    Street: string;
-    City: string;
-    State: string;
-    ZipCode: string;
+    street: string;
+    city: string;
+    state: string;
+    zipCode: string;
 }
