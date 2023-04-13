@@ -1,8 +1,9 @@
+using Core.Entities;
 using Core.Entities.OrderAggregate;
 
 namespace API.DTOs
 {
-    public class OrderToReturnDto
+    public class OrderToReturnDto : BaseEntity
     {
 
         public string BuyerEmail { get; set; }
